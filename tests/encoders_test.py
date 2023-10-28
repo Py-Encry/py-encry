@@ -1,6 +1,6 @@
 import unittest
 import pytest
-from py_enc.utils import encode_data_to_pixel
+from src.utils import encode_data_to_pixel, decode_data_from_pixel
 
 class PixelDataEncodeTests(unittest.TestCase):
     def test_can_encode_pixel(self):
