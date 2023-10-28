@@ -1,6 +1,6 @@
 # Py Encry <!-- omit in toc -->
 
-[![Python](https://img.shields.io/badge/support-9101FF?logo=python&logoColor=FFDF58&labelColor=3D7AAB&label=Python%203.12)](https://www.python.org/downloads/release/python-3120/)[![Build Status](https://github.com/Py-Encry/py-encry/actions/Tests/badge.svg)](https://github.com/Py-Encry/py-encry/actions/workflows/tests.yml)
+[![Python](https://img.shields.io/badge/support-9101FF?logo=python&logoColor=FFDF58&labelColor=3D7AAB&label=Python%203.12)](https://www.python.org/downloads/release/python-3120/)[![Build Status](https://github.com/Py-Encry/py-encry/workflows/Tests/badge.svg)](https://github.com/Py-Encry/py-encry/actions/workflows/tests.yml)
 
 Nti Johanneberg gymnasiearbete 2023/2024
 
