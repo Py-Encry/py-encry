@@ -9,3 +9,4 @@ class PixelDataDecodeTests(unittest.TestCase):
         expected = 0b01011101
 
         self.assertEqual(result, expected)
+
