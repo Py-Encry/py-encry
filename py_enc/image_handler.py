@@ -1,7 +1,7 @@
 from PIL import Image, ImageSequence
 from py_enc.encoders import *
 from py_enc.utils import *
-import time
+from io import BytesIO
 
 class ImageHandler:
     """A class to handle images for cryptography
@@ -29,6 +29,16 @@ class ImageHandler:
         """
 
         self.image = Image.open(file_path)
+
+    def from_string(string):
+        """Initialise the ImageHandler class from a string
+
+        :param string: string - The string to parse
+
+        :return: object - The ImageHandler object
+        """
+
+        return ImageHandler(BytesIO(string))
 
     def write(self, file_path):
         """Write to the image data to a file
