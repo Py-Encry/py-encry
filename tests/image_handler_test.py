@@ -1,6 +1,6 @@
 import unittest
 import pytest
-from src.image_handler import ImageHandler
+from pyencry.image_handler import ImageHandler
 
 class ImageHandlerTests(unittest.TestCase):
     def test_can_import_image(self):

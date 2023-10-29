@@ -1,6 +1,6 @@
 import unittest
 import pytest
-from src.utils import encode_data_to_pixel, decode_data_from_pixel
+from pyencry.utils import encode_data_to_pixel, decode_data_from_pixel
 
 class PixelDataEncodeTests(unittest.TestCase):
     def test_can_encode_pixel(self):
