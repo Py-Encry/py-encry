@@ -2,6 +2,8 @@ from PIL import Image, ImageSequence
 from py_enc.encoders import *
 from py_enc.utils import *
 import time
+import base64
+from io import BytesIO
 
 class ImageHandler:
     """A class to handle images for cryptography
@@ -38,6 +40,16 @@ class ImageHandler:
         """
 
         self.image.save(file_path)
+
+    def to_string(self):
+        """Write to the image data to a string
+
+        :return: string - The image data
+        """
+
+        buffer = BytesIO()
+        self.image.save(buffer, format="PNG")
+        return base64.b64encode(buffer.getvalue())
 
     def file_info(self):
         """Get the file information of the image
