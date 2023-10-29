@@ -2,6 +2,7 @@ from PIL import Image, ImageSequence
 from .encoders import *
 from .utils import *
 import time
+from io import BytesIO
 
 class ImageHandler:
     """A class to handle images for cryptography
@@ -103,8 +104,3 @@ class ImageHandler:
         match method:
             case _:
                 raise NotImplementedError(f"Method {method} not implemented")
-
-
-image_handler = ImageHandler("img/d.png")
-#image_handler.encode("lsb")
-#image_handler.write("img/d.png")
