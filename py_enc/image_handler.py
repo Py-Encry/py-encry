@@ -1,6 +1,6 @@
 from PIL import Image, ImageSequence
-#from .encoders import *
-#from .utils import *
+from .encoders import *
+from .utils import *
 from io import BytesIO
 
 class ImageHandler:
