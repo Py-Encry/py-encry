@@ -1,8 +1,8 @@
 from PIL import Image, ImageSequence
-from py_enc.encoders import *
-from py_enc.decoders import *
-from py_enc.utils import *
-import time
+from .encoders import *
+from .utils import *
+from .decoders import *
+from io import BytesIO
 
 class ImageHandler:
     """A class to handle images for cryptography
@@ -30,6 +30,17 @@ class ImageHandler:
         """
 
         self.image = Image.open(file_path)
+
+    @classmethod
+    def from_base64(cls, string):
+        """Initialise the ImageHandler class from a string
+
+        :param string: string - The string to parse
+
+        :return: object - The ImageHandler object
+        """
+
+        return cls(BytesIO(string))
 
     def write(self, file_path):
         """Write to the image data to a file
@@ -109,6 +120,6 @@ class ImageHandler:
                 raise NotImplementedError(f"Method {method} not implemented")
 
 
-image_handler = ImageHandler("img/d.png")
+#image_handler = ImageHandler.from_base64(b"Hello World")
 #image_handler.encode("lsb")
 #image_handler.write("img/d.png")
