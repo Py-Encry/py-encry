@@ -49,10 +49,26 @@ def decode_data_from_pixel(pixel):
 
   
 def get_rail_fence_pixels(width, height, rail_fence_height):
-    for n in range(width):
-        for m in range(height):
-            if m % (rail_fence_height * 2 - 2) == n % (rail_fence_height * 2 - 2):
-                yield (n, m)
+    h = 0
+    w = 0
+    rail = 0
+    down = True
+    while w <= width:
+        if down:
+            h += 1
+            rail += 1
+        else:
+            h -= 1
+            rail -= 1
+        if rail % (rail_fence_height - 1) == 0 :
+            down = not down
+        yield (w, h)
+        if w == width:
+            w = 0
+            h += rail_fence_height
+        if h == height:
+            break
+
 
 def get_random_spacing_pixels(width, height, key):
     seed(key)

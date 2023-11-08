@@ -1,8 +1,8 @@
 from PIL import Image, ImageSequence
-from py_enc.encoders import *
-from py_enc.utils import *
-import time
 import base64
+from .encoders import *
+from .utils import *
+from .decoders import *
 from io import BytesIO
 
 class ImageHandler:
@@ -31,6 +31,17 @@ class ImageHandler:
         """
 
         self.image = Image.open(file_path)
+
+    @classmethod
+    def from_base64(cls, string):
+        """Initialise the ImageHandler class from a string
+
+        :param string: string - The string to parse
+
+        :return: object - The ImageHandler object
+        """
+
+        return cls(BytesIO(string))
 
     def write(self, file_path):
         """Write to the image data to a file
@@ -77,12 +88,11 @@ class ImageHandler:
         match method:
             case "rail_fence_cipher":
                 info = self.file_info()
-                x = get_rail_fence_pixels(info["size"][0], info["size"][1], kwargs["key"])
+                enumerator = get_rail_fence_pixels(info["size"][0], info["size"][1], kwargs["key"])
                 encoded_data = encode_rail_fence_cipher(kwargs["data"], kwargs["key"])
-                for (idx, pixel) in enumerate(x):
+                for (idx, pixel) in enumerate(enumerator):
                     new_pixel = encode_data_to_pixel(self.image.getpixel(pixel), encoded_data[idx])
-                    self.image.putpixel(i, new_pixel)
-                
+                    self.image.putpixel(pixel, new_pixel)
             case "random_spacing":
                 info = self.file_info()
                 enumerator = get_random_spacing_pixels(info["size"][0], info["size"][1], kwargs["key"])
@@ -90,9 +100,6 @@ class ImageHandler:
                 for (idx, pixel) in enumerate(enumerator):
                     new_pixel = encode_data_to_pixel(self.image.getpixel(pixel), data[idx])
                     self.image.putpixel(pixel, new_pixel)
-                
-
-
             case _:
                 raise NotImplementedError(f"Method {method} not implemented")
                     
@@ -113,10 +120,17 @@ class ImageHandler:
         """
 
         match method:
+            case "rail_fence_cipher":
+                info = self.file_info()
+                enumerator = get_rail_fence_pixels(info["size"][0], info["size"][1], kwargs["key"])
+                decoded_data = ""
+                for pixel in enumerator:
+                    decoded_data += str(decode_data_from_pixel(self.image.getpixel(pixel)))
+                return decode_rail_fence_cipher(decoded_data, kwargs["key"])
             case _:
                 raise NotImplementedError(f"Method {method} not implemented")
 
 
-image_handler = ImageHandler("img/d.png")
+#image_handler = ImageHandler.from_base64(b"Hello World")
 #image_handler.encode("lsb")
 #image_handler.write("img/d.png")
