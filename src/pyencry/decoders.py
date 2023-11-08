@@ -38,4 +38,3 @@ def decode_rail_fence_cipher(message, rails):
         if rail % (rails - 1) == 0 :
             down = not down
     return result
-w
