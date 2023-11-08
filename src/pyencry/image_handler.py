@@ -129,8 +129,3 @@ class ImageHandler:
                 return decode_rail_fence_cipher(decoded_data, kwargs["key"])
             case _:
                 raise NotImplementedError(f"Method {method} not implemented")
-
-
-#image_handler = ImageHandler.from_base64(b"Hello World")
-#image_handler.encode("lsb")
-#image_handler.write("img/d.png")

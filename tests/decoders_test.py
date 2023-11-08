@@ -1,8 +1,8 @@
 import unittest
 import pytest
-from py_enc.decoders import *
-from py_enc.encoders import encode_rail_fence_cipher
-from py_enc.utils import *
+from src.pyencry.utils import decode_data_from_pixel
+from src.pyencry.encoders import encode_rail_fence_cipher
+from src.pyencry.decoders import decode_rail_fence_cipher
 
 class PixelDataDecodeTests(unittest.TestCase):
     def test_can_decode_pixel(self):
