@@ -1,4 +1,4 @@
-from random import seed, randint
+import random #seed, randint
 
 def get_pixels(width, height):
     for n in range(width):
@@ -70,13 +70,12 @@ def get_rail_fence_pixels(width, height, rail_fence_height):
             break
 
 
-def get_random_spacing_pixels(width, height, key):
-    seed(key)
+def get_random_spacing_pixels(height, width, key):
+    random.seed(key)
     i = 0
-    while i <= height:
+    while i < height - 5:
         j = 0
-        while j <= width:
-            j += randint(1,5)
+        while j < width - 5:
+            j += random.randint(1,5)
             yield(i, j)
         i += 1
-
