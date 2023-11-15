@@ -68,7 +68,13 @@ class ImageHandler:
         :return: dict - The file information
         """
 
-        return {"mode": self.image.mode, "size": self.image.size, "format": self.image.format, "filename": self.image.filename}
+        filename = ""
+        if not self.image.filename:
+            filename = None
+        else:
+            filename = self.image.filename
+
+        return {"mode": self.image.mode, "size": self.image.size, "format": self.image.format, "filename": filename}
 
     def encode(self, method, **kwargs):
         """Encode data into the image
