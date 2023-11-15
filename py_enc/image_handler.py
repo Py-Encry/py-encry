@@ -101,6 +101,20 @@ class ImageHandler:
         """
 
         match method:
+            case "rail_fence_cipher":
+                info = self.file_info()
+                enumerator = get_rail_fence_pixels(info["size"][0], info["size"][1], kwargs["key"])
+                decoded_data = ""
+                for pixel in enumerator:
+                    decoded_data += str(decode_data_from_pixel(self.image.getpixel(pixel)))
+                return decode_rail_fence_cipher(decoded_data, kwargs["key"])
+            case "random_spacing":
+                info = self.file_info()
+                enumerator = get_random_spacing_pixels(info["size"][0], info["size"][1], kwargs["key"])
+                decoded_data = ""
+                for pixel in enumerator:
+                    decoded_data += str(decode_data_from_pixel(self.image.getpixel(pixel)))
+                return decoded_data
             case _:
                 raise NotImplementedError(f"Method {method} not implemented")
 
