@@ -93,6 +93,11 @@ class ImageHandler:
                 for (idx, pixel) in enumerate(enumerator):
                     new_pixel = encode_data_to_pixel(self.image.getpixel(pixel), ord(encoded_data[idx]))
                     self.image.putpixel(pixel, new_pixel)
+                    if idx == len(encoded_data) - 1:
+                        break
+                pixel = next(enumerator)
+                new_pixel = encode_data_to_pixel(self.image.getpixel(pixel), ord('©'))
+                self.image.putpixel(pixel, new_pixel)
             case "random_spacing":
                 info = self.file_info()
                 enumerator = get_random_spacing_pixels(info["size"][0], info["size"][1], kwargs["key"])
@@ -128,16 +133,18 @@ class ImageHandler:
                 enumerator = get_rail_fence_pixels(info["size"][0], info["size"][1], kwargs["key"])
                 decoded_data = ""
                 for pixel in enumerator:
-                    decoded_data += str(decode_data_from_pixel(self.image.getpixel(pixel)))
+                    character = chr(decode_data_from_pixel(self.image.getpixel(pixel)))
+                    if character == '©':
+                        break
+                    decoded_data += character
                 return decode_rail_fence_cipher(decoded_data, kwargs["key"])
             case "random_spacing":
                 info = self.file_info()
-                image = self.image.convert('RGBA')
                 enumerator = get_random_spacing_pixels(info["size"][0], info["size"][1], kwargs["key"])
                 decoded_data = ""
                 for pixel in enumerator:
-                    print(image.getpixel(pixel))
-                    decoded_data += chr(decode_data_from_pixel(image.getpixel(pixel)))
+                    character = chr(decode_data_from_pixel(self.image.getpixel(pixel)))
+                    decoded_data += character
                 return decoded_data
             case _:
                 raise NotImplementedError(f"Method {method} not implemented")

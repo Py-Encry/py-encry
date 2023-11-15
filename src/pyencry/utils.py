@@ -53,7 +53,7 @@ def get_rail_fence_pixels(width, height, rail_fence_height):
     w = 0
     rail = 0
     down = True
-    while w <= width:
+    while w < width:
         if down:
             h += 1
             rail += 1
@@ -63,19 +63,22 @@ def get_rail_fence_pixels(width, height, rail_fence_height):
         if rail % (rail_fence_height - 1) == 0 :
             down = not down
         yield (w, h)
-        if w == width:
+        w += 1
+        if w + 1 == width:
             w = 0
             h += rail_fence_height
-        if h == height:
+        if h + 1 == height:
             break
 
 
 def get_random_spacing_pixels(height, width, key):
     random.seed(key)
     i = 0
-    while i < height - 5:
+    while i < height:
         j = 0
-        while j < width - 5:
+        while j < width:
             j += random.randint(1,5)
+            if j >= width:
+                break
             yield(i, j)
         i += 1
