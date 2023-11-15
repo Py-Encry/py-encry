@@ -31,6 +31,9 @@ class ImageHandler:
         """
 
         self.image = Image.open(file_path)
+        image_info = self.file_info()
+        if image_info["format"] != "PNG":
+            raise ValueError("Image must be in PNG format")
 
     @classmethod
     def from_base64(cls, string):
