@@ -5,7 +5,6 @@ def get_pixels(width, height):
         for m in range(height):
             yield (n, m)
 
-
 def encode_data_to_pixel(pixel, data):
     new_pixel = [0, 0, 0, 0]
 
