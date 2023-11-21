@@ -53,7 +53,7 @@ class ImageHandler:
         :return: None
         """
 
-        self.image.save(file_path)
+        self.image.save(file_path, format="PNG")
 
     def to_string(self):
         """Write to the image data to a string
@@ -100,15 +100,23 @@ class ImageHandler:
                 enumerator = get_rail_fence_pixels(info["size"][0], info["size"][1], kwargs["key"])
                 encoded_data = encode_rail_fence_cipher(kwargs["data"], kwargs["key"])
                 for (idx, pixel) in enumerate(enumerator):
-                    new_pixel = encode_data_to_pixel(self.image.getpixel(pixel), encoded_data[idx])
+                    new_pixel = encode_data_to_pixel(self.__get_pixel(pixel), ord(encoded_data[idx]))
                     self.image.putpixel(pixel, new_pixel)
+                    if idx == len(encoded_data) - 1:
+                        break
+                pixel = next(enumerator)
+                new_pixel = encode_data_to_pixel(self.__get_pixel(pixel), ord('©'))
+                self.image.putpixel(pixel, new_pixel)
             case "random_spacing":
                 info = self.file_info()
                 enumerator = get_random_spacing_pixels(info["size"][0], info["size"][1], kwargs["key"])
                 data = kwargs["data"]
                 for (idx, pixel) in enumerate(enumerator):
-                    new_pixel = encode_data_to_pixel(self.image.getpixel(pixel), data[idx])
+                    new_pixel = encode_data_to_pixel(self.__get_pixel(pixel), ord(data[idx]))
+                    print(new_pixel)
                     self.image.putpixel(pixel, new_pixel)
+                    if idx == len(data) - 1:
+                        break
             case _:
                 raise NotImplementedError(f"Method {method} not implemented")
                     
@@ -134,14 +142,31 @@ class ImageHandler:
                 enumerator = get_rail_fence_pixels(info["size"][0], info["size"][1], kwargs["key"])
                 decoded_data = ""
                 for pixel in enumerator:
-                    decoded_data += str(decode_data_from_pixel(self.image.getpixel(pixel)))
+                    character = chr(decode_data_from_pixel(self.image.getpixel(pixel)))
+                    if character == '©':
+                        break
+                    decoded_data += character
                 return decode_rail_fence_cipher(decoded_data, kwargs["key"])
             case "random_spacing":
                 info = self.file_info()
-                enumerator = get_rail_fence_pixels(info["size"][0], info["size"][1], kwargs["key"])
-                ecoded_data = ""
+                enumerator = get_random_spacing_pixels(info["size"][0], info["size"][1], kwargs["key"])
+                decoded_data = ""
                 for pixel in enumerator:
-                    decoded_data += str(decode_data_from_pixel(self.image.getpixel(pixel)))
+                    character = chr(decode_data_from_pixel(self.image.getpixel(pixel)))
+                    decoded_data += character
                 return decoded_data
             case _:
                 raise NotImplementedError(f"Method {method} not implemented")
+
+    def __get_pixel(self, pixel):
+        """A default key for the alpha channel
+
+        :param pixel: tuple - The pixel to get the key for
+
+        :return: int - The key
+        """
+        new_pixel = self.image.getpixel(pixel)
+        if len(new_pixel) == 3:
+            self.image.putalpha(255)
+            new_pixel = self.image.getpixel(pixel)
+        return new_pixel
