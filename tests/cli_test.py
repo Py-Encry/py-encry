@@ -41,3 +41,11 @@ class CliTests(unittest.TestCase):
         result = runner.invoke(cli, ['-f', 'img/test_encoded.png', '-d', '-m', 'random_spacing', '6'])
         self.assertEqual(result.exit_code, 0)
         self.assertEqual(result.output, 'This is a secret message\n')
+
+    def test_can_encode_with_text_file(self):
+        runner = CliRunner()
+        result = runner.invoke(cli, ['-f', 'img/d.png', '-e', '-m', 'random_spacing', '--data-file', 'data/test.txt', '--new-file', 'img/test_encoded.png', '6'])
+        self.assertEqual(result.exit_code, 0)
+        result = runner.invoke(cli, ['-f', 'img/test_encoded.png', '-d', '-m', 'random_spacing', '6'])
+        self.assertEqual(result.exit_code, 0)
+        self.assertEqual(result.output, 'This is a secret message\n')
