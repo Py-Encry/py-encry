@@ -7,7 +7,7 @@ sources = ["src"]
 
 [project]
 name = "py-encry"
-version = "0.2.0"
+version = "0.3.3"
 authors = [
   { name="Carl Harrison", email="carl.harrison@elev.ga.ntig.se" },
   { name="Simon", email="google@gmail.com"}
@@ -24,6 +24,9 @@ license = "MIT"
 dependencies = [
     "pillow",
 ]
+
+[project.scripts]
+pyencry = "pyencry.cli:cli"
 
 [project.urls]
 "Homepage" = "https://github.com/Py-Enc/py-enc"
