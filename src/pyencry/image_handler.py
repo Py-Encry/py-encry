@@ -117,6 +117,9 @@ class ImageHandler:
                     self.image.putpixel(pixel, new_pixel)
                     if idx == len(data) - 1:
                         break
+                pixel = next(enumerator)
+                new_pixel = encode_data_to_pixel(self.__get_pixel(pixel), ord('©'))
+                self.image.putpixel(pixel, new_pixel)
             case _:
                 raise NotImplementedError(f"Method {method} not implemented")
                     
@@ -153,6 +156,8 @@ class ImageHandler:
                 decoded_data = ""
                 for pixel in enumerator:
                     character = chr(decode_data_from_pixel(self.image.getpixel(pixel)))
+                    if character == '©':
+                        break
                     decoded_data += character
                 return decoded_data
             case _:

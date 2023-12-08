@@ -5,7 +5,7 @@ def print_version(ctx, param, value):
     """Print the version of the program"""
     if not value or ctx.resilient_parsing:
         return
-    click.echo('pyencry version 0.2.0')
+    click.echo('pyencry version 0.5.0')
     ctx.exit()
 
 @click.command()
