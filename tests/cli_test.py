@@ -56,4 +56,4 @@ class CliTests(unittest.TestCase):
         result = runner.invoke(cli, ['-f', 'img/test_encoded.png', '-d', '-m', 'random_spacing', '--new-data-file', 'data/test_decoded.txt', '6'])
         self.assertEqual(result.exit_code, 0)
         with open('data/test_decoded.txt', 'r') as f:
-            self.assertEqual(f.read(), 'This is a secret message\n')
+            self.assertEqual(f.read(), 'This is a secret message')
