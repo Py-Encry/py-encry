@@ -17,9 +17,10 @@ def print_version(ctx, param, value):
 @click.option('-m', '--method', type=click.Choice(['rail_fence_cipher', 'random_spacing'], case_sensitive=False), help='The method to use to encode/decode the data', default='rail_fence_cipher', required=True)
 @click.option('--data', help='The data to encode\n Only used if the --encode flag are used')
 @click.option('--data-file', help='The file to read the data to encode from\n Only used if the --encode flag are used')
+@click.option('--new-data-file', help='The file to write the decoded data to\n Only used if the --decode flag are used')
 @click.option('--new-file', help='The file to write the encoded image to\n Only used if the --encode flag are used')
 @click.argument('key')
-def cli(key, file, encode, decode, method, data, data_file, new_file):
+def cli(key, file, encode, decode, method, data, data_file, new_data_file, new_file):
     """Encode and decode data into and from images"""
     if not file:
         raise click.BadParameter('No file was given')
@@ -49,4 +50,8 @@ def cli(key, file, encode, decode, method, data, data_file, new_file):
         image.write(new_file)
     else:
         image = ImageHandler(file)
-        click.echo(image.decode(method, key=int(key)))
+        if new_data_file:
+            with open(new_data_file, 'w') as f:
+                f.write(image.decode(method, key=int(key)))
+        else:
+            click.echo(image.decode(method, key=int(key)))
