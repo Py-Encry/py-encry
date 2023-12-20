@@ -22,7 +22,7 @@ Additionally, the tool is accesable through our website.
 
 ## Installation
 
-To install Py Encry, you need to have Python 3.11 or higher installed on your computer.
+To install Py Encry, you need to have Python 3.12 or newer installed on your computer.
 The library is available on [PyPI](https://pypi.org/project/py-encry/), so you can install it using pip.
 
 ```bash
