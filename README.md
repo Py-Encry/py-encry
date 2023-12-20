@@ -36,7 +36,7 @@ TBD
 ## Contributing
 
 If you want to contribute to Py Encry, you can do so by forking the repository and creating a pull request.
-To build the project, you need to have Python 3.11 or higher installed on your computer and install the required packages.
+To build the project, you need to have Python 3.12 or newer installed on your computer and install the required packages.
 
 ### Setup
 
