@@ -1,11 +1,10 @@
-
 def encode_rail_fence_cipher(message, rails):
     fence = {}
     for rail in range(rails):
         fence[rail] = ""
     rail = 0
     down = True
-    for (idx, item) in enumerate(message):
+    for item in message:
         fence[rail] += item
         if down:
             rail += 1
