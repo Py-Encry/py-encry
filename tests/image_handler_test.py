@@ -19,7 +19,3 @@ class ImageHandlerTests(unittest.TestCase):
     def test_error_when_importing_other_than_png(self):
         with self.assertRaises(ValueError):
             ImageHandler("./img/error_file.jpg")
-
-    
-
-

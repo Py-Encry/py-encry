@@ -7,7 +7,7 @@ class CliTests(unittest.TestCase):
         runner = CliRunner()
         result = runner.invoke(cli, ['--version'])
         self.assertEqual(result.exit_code, 0)
-        self.assertEqual(result.output, 'pyencry version 0.5.0\n')
+        self.assertEqual(result.output, 'pyencry version 1.0.0a1\n')
 
     def test_can_encode_then_decode(self):
         runner = CliRunner()

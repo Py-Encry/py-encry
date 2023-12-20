@@ -31,4 +31,4 @@ class RailFenceEncodeTests(unittest.TestCase):
     def test_can_encode_6_rails_rail_fence(self):
         result = encode_rail_fence_cipher("112358132134558914423337761098715972584418167651094617711286", 6)
         expected = "133714114238148966225439541018335470986172518171757571896261"
-        self.assertEqual(result, expected)  
+        self.assertEqual(result, expected)
