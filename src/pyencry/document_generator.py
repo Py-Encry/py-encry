@@ -1,5 +1,4 @@
-import ast
-import json
+import ast, sys, json
 
 class DocumentGenerator:
     def __init__(self, filename):
@@ -19,7 +18,6 @@ class DocumentGenerator:
                     docstrings.append((node.name, node.body[0].value.s, type(node).__name__, inside_class))
             if isinstance(node, ast.ClassDef):
                 inside_class = node.name
-
         return docstrings
     
     def count_starting_characters(self, input_string, target_character):
@@ -33,7 +31,6 @@ class DocumentGenerator:
 
     def parse_docstring(self):
         info = []
-
 
         for name, docstring, type, inside_class in self.docstrings:
             content = docstring.split('\n')
@@ -86,7 +83,10 @@ class DocumentGenerator:
         return info
 
 if __name__ == '__main__':
-    filename = './py_enc/image_handler.py'  # Replace with your Python file's path
+    if len(sys.argv) < 2:
+        print("Usage: python document_generator.py <filename>")
+        exit(1)
+    filename = sys.argv[1]  # Replace with your Python file's path
     docstrings = DocumentGenerator(filename)
 
     info = docstrings.parse_docstring()
