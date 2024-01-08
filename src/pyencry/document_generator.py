@@ -1,11 +1,29 @@
 import ast, sys, json
 
 class DocumentGenerator:
+    """A class used to parse docstrings from a Python file
+    
+    Attributes
+    ----------
+    filename : string - The path to the file to parse
+    docstrings : list - A list of docstrings from the file
+
+    Methods
+    -------
+    extract_docstrings(): Extracts the docstrings from the file
+    count_starting_characters(input_string, target_character): Counts the number of starting characters in a string
+    parse_docstring(): Parses the docstrings into a JSON object
+    """
     def __init__(self, filename):
         self.filename = filename
         self.docstrings = self.extract_docstrings()
 
     def extract_docstrings(self):
+        """Extracts the docstrings from the file
+
+        returns:
+        - list - A list of docstrings from the file
+        """
         with open(self.filename, 'r', encoding='utf-8') as file:
             tree = ast.parse(file.read())
         
@@ -15,12 +33,23 @@ class DocumentGenerator:
         for node in ast.walk(tree):
             if isinstance(node, (ast.FunctionDef, ast.ClassDef, ast.Module)):
                 if node.body and isinstance(node.body[0], ast.Expr):
+                    if str(node.name).startswith("__"):
+                        continue
                     docstrings.append((node.name, node.body[0].value.s, type(node).__name__, inside_class))
             if isinstance(node, ast.ClassDef):
                 inside_class = node.name
         return docstrings
     
     def count_starting_characters(self, input_string, target_character):
+        """Counts the number of starting characters in a string
+
+        arguments:
+        - input_string - string - The string to count the characters in
+        - target_character - string - The character to count
+
+        returns:
+        - int - The number of starting characters in the string
+        """
         count = 0
         for char in input_string:
             if char == target_character:
@@ -30,6 +59,12 @@ class DocumentGenerator:
         return count
 
     def parse_docstring(self):
+        """Parses the docstrings into a JSON object
+
+        returns:
+        - list - A list of docstrings from the file
+        """
+
         info = []
 
         for name, docstring, type, inside_class in self.docstrings:

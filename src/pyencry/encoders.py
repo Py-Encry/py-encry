@@ -1,4 +1,21 @@
 def encode_rail_fence_cipher(message, rails):
+    """Encode a message with the rail fence cipher
+
+    arguments:
+    - message - string - The message to encode
+    - rails - int - The number of rails to use to encode the message
+
+    returns:
+    - string - The encoded message
+
+    example:
+    ```
+    message = "This is a secret message"
+    rails = 4
+    encoded_message = encode_rail_fence_cipher(message, rails)
+    ```
+    """
+    
     fence = {}
     for rail in range(rails):
         fence[rail] = ""
