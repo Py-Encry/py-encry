@@ -1,6 +1,23 @@
 import math
 
 def decode_rail_fence_cipher(message, rails):
+    """Decode a message encoded with the rail fence cipher
+
+    arguments:
+    - message - string - The message to decode
+    - rails - int - The number of rails to use to decode the message
+
+    returns:
+    - string - The decoded message
+
+    example:
+    ```
+    message = "This is a secret message"
+    rails = 4
+    decoded_message = decode_rail_fence_cipher(message, rails)
+    ```
+    """
+    
     message_size = len(message)
     fence = { rails: 0 for rails in range(rails) }
     for n in range(rails):
