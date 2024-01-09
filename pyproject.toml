@@ -10,7 +10,7 @@ sources = ["src"]
 
 [project]
 name = "py-encry"
-version = "1.0.0a2"
+version = "1.0.0b1"
 authors = [
   { name="Carl Harrison", email="carl.harrison@elev.ga.ntig.se" },
   { name="Simon", email="google@gmail.com"}
