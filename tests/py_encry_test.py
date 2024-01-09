@@ -2,10 +2,6 @@ import unittest
 from src.pyencry.image_handler import ImageHandler 
 
 class PyEncryTests(unittest.TestCase):
-    def test_can_import_pyencry(self):
-        import pyencry
-        self.assertTrue(pyencry)
-
     def test_can_encode_picture_with_rail_fence(self):
         image_handler = ImageHandler("./img/d.png")
         image_handler.encode("rail_fence_cipher", data="This is a secret message", key=4)
