@@ -15,6 +15,8 @@ Additionally, the tool is accesable through our website.
 
 - [Installation](#installation)
 - [Usage](#usage)
+  - [CLI](#cli)
+  - [API](#api)
 - [Contributing](#contributing)
   - [Setup](#setup)
   - [Run tests](#run-tests)
@@ -31,7 +33,39 @@ python -m pip install py-encry
 
 ## Usage
 
-TBD
+To use Py Encry, you can either use the API or the CLI.
+If the program is intended to be used in another project, the API is the way to go, the CLI is intended for quick usage from the command line.
+
+### CLI
+
+To use the CLI, you need to install the package and then run the `pyencry` command.
+Note! The python package install folder may not be in your PATH, so you may need to add it manually.
+Just google your operating system and how to add the python executable folder to your PATH.
+
+Once the package is installed, you can run the `pyencry` command.
+You can use the `--help` flag to get more information about all the available options.
+
+```bash
+pyencry -v
+1.0.0b1
+
+pyencry --help
+...
+```
+
+### API
+
+To use the API, you need to import the `py_encry` module.
+
+```python
+from pyencry import ImageHandler
+
+handler = ImageHandler("<path_to_image>")
+handler.encrypt("<encryption_method>", data="<data_to_encrypt>", key=<encryption_key>)
+handler.save("<path_to_save_image>")
+```
+
+For full documentation, visit our website or check out the docstrings in the code.
 
 ## Contributing
 
