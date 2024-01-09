@@ -1,9 +1,5 @@
 from PIL import Image, ImageSequence
 import base64
-from .encoders import *
-from .utils import *
-from .decoders import *
-from io import BytesIO
 
 class ImageHandler:
     """A class to handle images for cryptography
@@ -167,6 +163,7 @@ class ImageHandler:
                 data = kwargs["data"]
                 for (idx, pixel) in enumerate(enumerator):
                     new_pixel = encode_data_to_pixel(self.__get_pixel(pixel), ord(data[idx]))
+                    print(new_pixel)
                     self.image.putpixel(pixel, new_pixel)
                     if idx == len(data) - 1:
                         break
