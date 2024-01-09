@@ -1,9 +1,5 @@
 from PIL import Image, ImageSequence
 import base64
-from .encoders import *
-from .utils import *
-from .decoders import *
-from io import BytesIO
 
 class ImageHandler:
     """A class to handle images for cryptography
@@ -23,11 +19,16 @@ class ImageHandler:
     def __init__(self, file_path):
         """Initialise the ImageHandler class
 
-        :param file_path: string - The path to the image file
+        arguments:
+        - file_path - string - The path to the file to parse
 
-        :attribute image: Image - The parsed image
+        returns:
+        - ImageHandler - The ImageHandler object
 
-        :return: object - The ImageHandler object
+        example:
+        ```
+        image_handler = ImageHandler("./img/TechSmith-Blog-JPGvsPNG-DE.png")
+        ```
         """
 
         self.image = Image.open(file_path)
@@ -36,21 +37,39 @@ class ImageHandler:
             raise ValueError("Image must be in PNG format")
 
     @classmethod
-    def from_base64(cls, string):
+    def from_base64(cls, base64_string):
         """Initialise the ImageHandler class from a string
 
-        :param string: string - The string to parse
+        arguments:
+        - base64_string - string - The string to parse
 
-        :return: object - The ImageHandler object
+        returns:
+        - ImageHandler - The ImageHandler object
+
+        example:
+        ```
+        with open("./img/TechSmith-Blog-JPGvsPNG-DE.png", "rb") as file:
+            image_handler = ImageHandler.from_base64(file.read())
+        ```
         """
 
-        return cls(BytesIO(string))
+        return cls(BytesIO(base64_string))
 
     def write(self, file_path):
         """Write to the image data to a file
 
-        :param file_path: string - The path to the file to write to
-        :return: None
+        arguments:
+        - file_path - string - The path to the file to write to
+
+        returns:
+        - no-return
+
+        example:
+        ```
+        image_handler = ImageHandler("./img/TechSmith-Blog-JPGvsPNG-DE.png")
+
+        image_handler.write("./img/test.png")
+        ```
         """
 
         self.image.save(file_path, format="PNG")
@@ -58,7 +77,15 @@ class ImageHandler:
     def to_string(self):
         """Write to the image data to a string
 
-        :return: string - The image data
+        returns:
+        - string - The image data
+
+        example:
+        ```
+        image_handler = ImageHandler("./img/TechSmith-Blog-JPGvsPNG-DE.png")
+
+        image_handler.to_string()
+        ```
         """
 
         buffer = BytesIO()
@@ -68,7 +95,21 @@ class ImageHandler:
     def file_info(self):
         """Get the file information of the image
 
-        :return: dict - The file information
+        The information returned is:
+        - mode: The mode of the image
+        - size: The size of the image
+        - format: The format of the image
+        - filename: The filename of the image
+
+        returns:
+        - dict - The file information
+
+        example:
+        ```
+        image_handler = ImageHandler("./img/TechSmith-Blog-JPGvsPNG-DE.png")
+
+        image_handler.file_info()
+        ```
         """
 
         filename = ""
@@ -82,17 +123,26 @@ class ImageHandler:
     def encode(self, method, **kwargs):
         """Encode data into the image
 
-        :param method: string - The method to use to encode the data
-        :param kwargs: dict - The arguments to pass to the method
-
-        :return: None
-
-        :raises: NotImplementedError - If the method is not implemented
-
         The method allows selecting the method to use to encode the data, and
         it accepts keyword arguments to pass to the method. The keywords are:
         - data: The data to encode
         - key: The key to use to encode the data
+
+        The method raises a NotImplementedError if the method is not implemented.
+
+        arguments:
+        - method - string - The method to use to encode the data
+        - kwargs - dict - The arguments to pass to the method
+
+        returns:
+        - no-return
+
+        example:
+        ```
+        image_handler = ImageHandler("./img/TechSmith-Blog-JPGvsPNG-DE.png")
+
+        image_handler.encode("rail_fence_cipher", data="This is a secret message", key=4)
+        ```
         """
         match method:
             case "rail_fence_cipher":
@@ -113,6 +163,7 @@ class ImageHandler:
                 data = kwargs["data"]
                 for (idx, pixel) in enumerate(enumerator):
                     new_pixel = encode_data_to_pixel(self.__get_pixel(pixel), ord(data[idx]))
+                    print(new_pixel)
                     self.image.putpixel(pixel, new_pixel)
                     if idx == len(data) - 1:
                         break
@@ -126,16 +177,18 @@ class ImageHandler:
     def decode(self, method, **kwargs):
         """Decode data from the image
 
-        :param method: string - The method to use to decode the data
-        :param kwargs: dict - The arguments to pass to the method
-
-        :return: string - The decoded data
-
-        :raises: NotImplementedError - If the method is not implemented
-
         The method allows selecting the method to use to decode the data, and
         it accepts keyword arguments to pass to the method. The keywords are:
         - key: The key to use to decode the data
+
+        The method raises a NotImplementedError if the method is not implemented.
+
+        arguments:
+        - method - string - The method to use to decode the data
+        - kwargs - dict - The arguments to pass to the method
+
+        returns:
+        - string - The decoded data
         """
 
         match method:
@@ -165,9 +218,11 @@ class ImageHandler:
     def __get_pixel(self, pixel):
         """A default key for the alpha channel
 
-        :param pixel: tuple - The pixel to get the key for
+        arguments:
+        - pixel - tuple - The pixel to get the alpha channel from
 
-        :return: int - The key
+        returns:
+        - tuple - The pixel with the alpha channel
         """
         new_pixel = self.image.getpixel(pixel)
         if len(new_pixel) == 3:
